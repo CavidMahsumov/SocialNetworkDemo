@@ -42,7 +42,8 @@ namespace SocialProject.WebUI.Controllers
             var model = new PostViewModel
             {
                 Posts = _postRepository.GetAll().Reverse().ToList(),
-                Users = users
+                Users = users,
+                CurrentUser = await GetUser()
             };
             return View(model);
         }
