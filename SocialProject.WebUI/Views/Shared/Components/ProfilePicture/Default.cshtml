@@ -1,0 +1,24 @@
+﻿@model SocialProject.WebUI.Models.ProfilePictureViewModel
+
+
+<style>
+    .img-area {
+        border-radius: 50%;
+    }
+</style>
+
+
+<div>
+    <a asp-controller="Home" asp-action="Settings" class="p-0 ms-3 menu-icon">
+        @if (Model.ProfileUrl == null)
+        {
+            <img src="~/images/Profile_Icon1.png" alt="user" class="w60 mt--1">
+        }
+        else
+        {
+            <img src="~/images/@Model.ProfileUrl" alt="user" class="img-area w60 mt--1">
+        }
+    </a>
+</div>
+
+
