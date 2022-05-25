@@ -27,8 +27,8 @@ namespace SocialNetwork.WebUI.Controllers
             _postRepository = postRepository;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreatePost(PostViewModel postViewModel)
+        [HttpPost] 
+        public async Task<IActionResult> CreatePost(PostViewModel postViewModel)     
         {
             var userId = _httpContext.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
