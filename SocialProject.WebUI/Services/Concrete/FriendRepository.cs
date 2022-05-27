@@ -9,6 +9,11 @@ namespace SocialNetwork.WebUI.Services.Concrete
     {
         private CustomIdentityDbContext _context;
 
+        public FriendRepository(CustomIdentityDbContext context)
+        {
+            _context = context;
+        }
+
         public void Add(Friend item)
         {
             _context.Friends.Add(item);

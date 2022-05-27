@@ -20,14 +20,16 @@ namespace SocialNetwork.WebUI.Controllers
         private readonly IWebHostEnvironment _webhost;
         private IPostRepository _postRepository;
         private INotficationRepository _notfRepository;
+        private IFriendRepository _friendRepository;
 
-        public FriendController(IHttpContextAccessor httpContext, UserManager<CustomIdentityUser> userManager, IWebHostEnvironment webhost, IPostRepository postRepository, INotficationRepository notfRepository)
+        public FriendController(IHttpContextAccessor httpContext, UserManager<CustomIdentityUser> userManager, IWebHostEnvironment webhost, IPostRepository postRepository, INotficationRepository notfRepository, IFriendRepository friendRepository)
         {
             _httpContext = httpContext;
             _userManager = userManager;
             _webhost = webhost;
             _postRepository = postRepository;
             _notfRepository = notfRepository;
+            _friendRepository = friendRepository;
         }
 
         //private INotficationRepository _notfRepository;
@@ -60,6 +62,23 @@ namespace SocialNetwork.WebUI.Controllers
 
             return Ok();
             
+        }
+
+        [HttpPost]
+        public IActionResult AddFriend(NotificationViewModel model)
+        {
+            var friend = new Friend()
+            {
+                Accepted = true,
+                SenderId = model.SenderId,
+                ReceiverId = model.ReceiverId,
+                ReceiverUser = model.ReceiverUser,
+                SenderUser = model.SenderUser
+
+            };
+
+            _friendRepository.Add(friend);
+            return Ok();
         }
     }
 }

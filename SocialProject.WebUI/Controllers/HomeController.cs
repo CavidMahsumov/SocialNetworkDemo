@@ -289,10 +289,16 @@ namespace SocialProject.WebUI.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Notification()
+        public IActionResult Notification()
         {
             var notf = _notfRepository.GetAll();
-            return View(notf);
+            var model = new NotificationViewModel()
+            {
+                Notfications = notf.ToList(),
+                Users=_userManager.Users.ToList()
+                
+            };
+            return View(model);
         }
 
         public IActionResult HelpBox()

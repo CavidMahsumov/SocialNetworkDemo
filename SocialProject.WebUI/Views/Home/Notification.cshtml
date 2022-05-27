@@ -1,5 +1,5 @@
-﻿@using SocialNetwork.WebUI.Helpers
-@model IEnumerable<SocialNetwork.WebUI.Entities.Notfication>
+﻿@model SocialNetwork.WebUI.Models.NotificationViewModel
+@using SocialNetwork.WebUI.Helpers
 
 @{
     Layout = "~/Views/Shared/_Layout2.cshtml";
@@ -27,20 +27,27 @@
                         </h2>
 
                         <ul class="notification-box">
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.Notfications)
                             {
                                 if (item.ToUserId == @UserHelper.CurrentUserId)
                                 {
 
+                                    <form asp-action="AddFriend" asp-controller="Friend" method="post">
 
                                     <li>
                                         <a href="#" class="d-flex align-items-center p-3 rounded-3 bg-lightblue theme-light-bg">
-                                            @*<img src="@item.FromUser.ImageUrl" alt="user" class="w45 me-3">*@
+                                            <img src="@item.FromUser.ImageUrl" alt="user" class="w45 me-3">
                                             <i class="feather-heart text-white bg-red-gradiant me-2 font-xssss notification-react"></i>
                                             <h6 class="font-xssss text-grey-900 text-grey-900 mb-0 mt-0 fw-500 lh-20"><strong>@item.FromUser.Firstname @item.FromUser.Lastname</strong> added <strong>Friend</strong>  <span class="d-block text-grey-500 font-xssss fw-600 mb-0 mt-0 0l-auto"> 12 minutes ago</span> </h6>
                                             <i class="ti-more-alt text-grey-500 font-xs ms-auto"></i>
+                                            <input  value=@item.ToUserId asp-for="ReceiverId" class="mt-0 btn pt-2 pb-2 ps-3 pe-3 lh-24 ms-1 ls-3 d-inline-block rounded-xl bg-success font-xsssss fw-700 ls-lg text-white">ADD FRIEND
+                                            <input  value=@item.FromUserId asp-for="SenderId" class="mt-0 btn pt-2 pb-2 ps-3 pe-3 lh-24 ms-1 ls-3 d-inline-block rounded-xl bg-success font-xsssss fw-700 ls-lg text-white">ADD FRIEND
+
+
                                         </a>
+                                        <button>Accepted Friend</button>
                                     </li>
+                                    </form>
                                 }
 
                             }

@@ -32,6 +32,7 @@ namespace SocialProject.WebUI
             services.AddRazorPages();
             services.AddScoped<IPostRepository,PostRepository>();
             services.AddScoped<INotficationRepository,NotificationRepository>();
+            services.AddScoped<IFriendRepository,FriendRepository>();
             services.AddDbContext<CustomIdentityDbContext>(
                 options => options
                 .UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SocialMediaDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));

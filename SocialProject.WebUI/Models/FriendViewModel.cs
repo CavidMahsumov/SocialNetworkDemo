@@ -6,7 +6,10 @@ namespace SocialNetwork.WebUI.Models
 {
     public class FriendViewModel
     {
-        public CustomIdentityUser CurUser { get; set; }
+        public string SenderId { get; set; }
+        public string ReceiverId { get; set; }
+        public CustomIdentityUser RecevierUser { get; set; }
+        public CustomIdentityUser SenderUser { get; set; }
         public List<CustomIdentityUser>Users { get; set; }
      
 
