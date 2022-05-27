@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SocialNetwork.WebUI.Services.Abstract;
+using SocialNetwork.WebUI.Services.Concrete;
 using SocialProject.WebUI.Entities;
 using SocialProject.WebUI.Services.Abstract;
 using SocialProject.WebUI.Services.Concrete;
@@ -29,6 +31,7 @@ namespace SocialProject.WebUI
         {
             services.AddRazorPages();
             services.AddScoped<IPostRepository,PostRepository>();
+            services.AddScoped<INotficationRepository,NotificationRepository>();
             services.AddDbContext<CustomIdentityDbContext>(
                 options => options
                 .UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SocialMediaDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));

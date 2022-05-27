@@ -25,7 +25,7 @@ namespace SocialProject.WebUI.Controllers
             _roleManager = roleManager;
             _signInManager = signInManager;
             _httpContext = httpContext;
-        }
+        }   
 
         public IActionResult LogIn()
         {

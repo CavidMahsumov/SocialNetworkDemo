@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using SocialNetwork.WebUI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace SocialProject.WebUI.Entities
         public CustomIdentityUser()
         {
             Posts = new List<Post>();
+            FromNotfications = new List<Notfication>();
+            ToNotfications = new List<Notfication>();
         }
         public string ImageUrl { get; set; }
 
@@ -40,6 +43,11 @@ namespace SocialProject.WebUI.Entities
         public string Google { get; set; }
 
         public  ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Friend> SenderUsers { get; set; }
+        public virtual ICollection<Friend> FriendsUsers { get; set; }
+        public  virtual ICollection<Notfication> FromNotfications { get; set; }
+        public  virtual ICollection<Notfication> ToNotfications { get; set; }
+        
 
 
 

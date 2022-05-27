@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialProject.WebUI.Entities;
 
 namespace SocialProject.WebUI.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
-    partial class CustomIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220527130739_Init4")]
+    partial class Init4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,23 +153,24 @@ namespace SocialProject.WebUI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CustomIdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FromUserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ToUserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromUserId");
-
-                    b.HasIndex("ToUserId");
+                    b.HasIndex("CustomIdentityUserId");
 
                     b.ToTable("Notfications");
                 });
@@ -410,13 +413,9 @@ namespace SocialProject.WebUI.Migrations
 
             modelBuilder.Entity("SocialNetwork.WebUI.Entities.Notfication", b =>
                 {
-                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "FromUser")
-                        .WithMany("FromNotfications")
-                        .HasForeignKey("FromUserId");
-
-                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "ToUser")
-                        .WithMany("ToNotfications")
-                        .HasForeignKey("ToUserId");
+                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", null)
+                        .WithMany("Notfications")
+                        .HasForeignKey("CustomIdentityUserId");
                 });
 
             modelBuilder.Entity("SocialProject.WebUI.Entities.Post", b =>

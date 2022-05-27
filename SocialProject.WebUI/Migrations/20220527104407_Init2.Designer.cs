@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialProject.WebUI.Entities;
 
 namespace SocialProject.WebUI.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
-    partial class CustomIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220527104407_Init2")]
+    partial class Init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,34 +144,6 @@ namespace SocialProject.WebUI.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Friends");
-                });
-
-            modelBuilder.Entity("SocialNetwork.WebUI.Entities.Notfication", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FromUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ToUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FromUserId");
-
-                    b.HasIndex("ToUserId");
-
-                    b.ToTable("Notfications");
                 });
 
             modelBuilder.Entity("SocialProject.WebUI.Entities.CustomIdentityRole", b =>
@@ -406,17 +380,6 @@ namespace SocialProject.WebUI.Migrations
                     b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "SenderUser")
                         .WithMany("SenderUsers")
                         .HasForeignKey("SenderId");
-                });
-
-            modelBuilder.Entity("SocialNetwork.WebUI.Entities.Notfication", b =>
-                {
-                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "FromUser")
-                        .WithMany("FromNotfications")
-                        .HasForeignKey("FromUserId");
-
-                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "ToUser")
-                        .WithMany("ToNotfications")
-                        .HasForeignKey("ToUserId");
                 });
 
             modelBuilder.Entity("SocialProject.WebUI.Entities.Post", b =>

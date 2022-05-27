@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.WebUI.Helpers;
+using SocialNetwork.WebUI.Models;
+using SocialNetwork.WebUI.Services.Abstract;
 using SocialProject.WebUI.Entities;
 using SocialProject.WebUI.Helpers;
 using SocialProject.WebUI.Models;
@@ -22,23 +25,26 @@ namespace SocialProject.WebUI.Controllers
         private UserManager<CustomIdentityUser> _userManager;
         private readonly IWebHostEnvironment _webhost;
         private IPostRepository _postRepository;
+        public INotficationRepository _notfRepository { get; set; }
 
 
-        public HomeController(IHttpContextAccessor httpContext, UserManager<CustomIdentityUser> userManager, IWebHostEnvironment webhost, IPostRepository postRepository)
+        public HomeController(IHttpContextAccessor httpContext, UserManager<CustomIdentityUser> userManager, IWebHostEnvironment webhost, IPostRepository postRepository, INotficationRepository notfRepository)
         {
             _httpContext = httpContext;
             _userManager = userManager;
             _webhost = webhost;
             _postRepository = postRepository;
+            _notfRepository = notfRepository;
         }
 
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-
+            var user = await GetUser();
             var users = _userManager.Users.ToList();
-
+            UserHelper.CurrentUserId = user.Id;
+            UserHelper.CurUser = user;
             var model = new PostViewModel
             {
                 Posts = _postRepository.GetAll().Reverse().ToList(),
@@ -53,6 +59,7 @@ namespace SocialProject.WebUI.Controllers
         public async Task<IActionResult> Index(PostViewModel model)
         {
             var user = await GetUser();
+
             var helper = new ImageHelper(_webhost);
             var image = await helper.SaveFile(model.File);
             var post = new Post
@@ -282,9 +289,10 @@ namespace SocialProject.WebUI.Controllers
             return View();
         }
 
-        public IActionResult Notification()
+        public async Task<IActionResult> Notification()
         {
-            return View();
+            var notf = _notfRepository.GetAll();
+            return View(notf);
         }
 
         public IActionResult HelpBox()
@@ -296,9 +304,16 @@ namespace SocialProject.WebUI.Controllers
         {
             return View();
         }
-        public IActionResult Member()
+        public async Task<IActionResult> Member()
         {
-            return View();
+            var users = _userManager.Users.ToList();
+            var curruser=await GetUser();
+            var model = new NotificationViewModel()
+            {
+                Users = users,
+                 CurUser = curruser
+            };
+            return View(model);
         }
 
 
