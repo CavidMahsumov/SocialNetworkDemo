@@ -30,7 +30,7 @@ namespace SocialProject.WebUI.Entities
             builder.Entity<Friend>()
                 .HasOne(fs => fs.ReceiverUser)
                 .WithMany(u => u.FriendsUsers)
-                .HasForeignKey(fs => fs.Id);
+                .HasForeignKey(fs => fs.ReceiverId);
 
             builder.Entity<Notfication>()
                 .HasOne(ns => ns.FromUser)

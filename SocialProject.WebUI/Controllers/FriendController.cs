@@ -65,20 +65,22 @@ namespace SocialNetwork.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddFriend(NotificationViewModel model)
+        public async Task<IActionResult> AddFriend(NotificationViewModel model)
         {
+            var sender=await _userManager.FindByIdAsync(model.SenderId);  
+            var receiver= await _userManager.FindByIdAsync(model.ReceiverId);
             var friend = new Friend()
             {
                 Accepted = true,
                 SenderId = model.SenderId,
                 ReceiverId = model.ReceiverId,
-                ReceiverUser = model.ReceiverUser,
-                SenderUser = model.SenderUser
+                ReceiverUser = receiver,
+                SenderUser = sender
 
             };
 
             _friendRepository.Add(friend);
-            return Ok();
+            return RedirectToAction("Notification","Home");
         }
     }
 }
