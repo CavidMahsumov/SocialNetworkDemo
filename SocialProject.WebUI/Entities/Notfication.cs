@@ -5,7 +5,7 @@ namespace SocialNetwork.WebUI.Entities
 {
     public class Notfication
     {
-        public int Id { get; set; }
+        public int NotficationId { get; set; }
         public string FromUserId { get; set; }
         public string ToUserId { get; set; }
         public virtual CustomIdentityUser FromUser { get; set; }

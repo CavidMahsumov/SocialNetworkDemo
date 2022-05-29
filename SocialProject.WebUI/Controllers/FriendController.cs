@@ -35,7 +35,7 @@ namespace SocialNetwork.WebUI.Controllers
         //private INotficationRepository _notfRepository;
 
         [HttpPost]
-        public async  Task<IActionResult> SendNotf(NotificationViewModel model)
+        public async Task<IActionResult> SendNotf(NotificationViewModel model)
         {
             var userId = _httpContext.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
@@ -49,26 +49,26 @@ namespace SocialNetwork.WebUI.Controllers
                 FromUserId = model.SenderId,
                 Message = $"{model.SenderUser.Firstname + model.SenderUser.Lastname} send Friend",
                 ToUserId = model.ReceiverId,
-                FromUser=model.SenderUser,
-                 ToUser=model.ReceiverUser,
+                FromUser = model.SenderUser,
+                ToUser = model.ReceiverUser,
             };
 
 
-            
+
 
             _notfRepository.Add(notfication);
 
 
 
             return Ok();
-            
+
         }
 
         [HttpPost]
         public async Task<IActionResult> AddFriend(NotificationViewModel model)
         {
-            var sender=await _userManager.FindByIdAsync(model.SenderId);  
-            var receiver= await _userManager.FindByIdAsync(model.ReceiverId);
+            var sender = await _userManager.FindByIdAsync(model.SenderId);
+            var receiver = await _userManager.FindByIdAsync(model.ReceiverId);
             var friend = new Friend()
             {
                 Accepted = true,
@@ -78,9 +78,12 @@ namespace SocialNetwork.WebUI.Controllers
                 SenderUser = sender
 
             };
+           
+                _notfRepository.Delete(model.CurrentNotfId);
 
+           
             _friendRepository.Add(friend);
-            return RedirectToAction("Notification","Home");
+            return RedirectToAction("Notification", "Home");
         }
     }
 }

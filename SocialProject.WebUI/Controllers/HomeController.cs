@@ -47,7 +47,7 @@ namespace SocialProject.WebUI.Controllers
             UserHelper.CurUser = user;
             var model = new PostViewModel
             {
-                Posts = _postRepository.GetAll().Reverse().ToList(),
+                Posts = _postRepository.GetAll().ToList(),
                 Users = users,
                 CurrentUser = await GetUser()
             };

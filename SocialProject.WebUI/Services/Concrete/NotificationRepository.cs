@@ -25,7 +25,14 @@ namespace SocialNetwork.WebUI.Services.Concrete
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            foreach (var item in _context.Notfications)
+            {
+                if (item.NotficationId == id)
+                {
+                    _context.Remove(item);
+                }
+            }
+            _context.SaveChanges();
         }
 
         public Notfication Get(int id)
@@ -51,6 +58,7 @@ namespace SocialNetwork.WebUI.Services.Concrete
                                           ToUserId = d.ToUserId,
                                           FromUser = d.FromUser,
                                           FromUserId = d.FromUserId,
+                                           NotficationId=d.NotficationId
 
                                       };
 

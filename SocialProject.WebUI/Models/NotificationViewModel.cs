@@ -12,7 +12,7 @@ namespace SocialNetwork.WebUI.Models
             Notfications = new List<Notfication>();
         }
 
-
+        public int CurrentNotfId { get; set; }
         public string SenderId { get; set; }
         public string ReceiverId { get; set; }
         public CustomIdentityUser SenderUser { get; set; }

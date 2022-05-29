@@ -48,7 +48,15 @@ namespace SocialProject.WebUI.Services.Concrete
 
         public IEnumerable<Post> GetAll()
         {
-            return _context.Posts.ToList();
+            var downtimeJoinReasons = from d in _context.Users
+                                      join u in _context.Friends on d.Id equals u.SenderId
+                                      select new Post
+                                      {
+                                            UserId=d.Id,
+                                            
+                                      };
+
+            return downtimeJoinReasons.ToList();
         }
 
         public void Update(Post post)
