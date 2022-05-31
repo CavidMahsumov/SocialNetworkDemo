@@ -18,6 +18,7 @@ namespace SocialProject.WebUI.Entities
         public DbSet<Post> Posts { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Notfication> Notfications { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -40,6 +41,18 @@ namespace SocialProject.WebUI.Entities
             builder.Entity<Notfication>()
                 .HasOne(ns => ns.ToUser)
                 .WithMany(i => i.ToNotfications)
+                .HasForeignKey(cs => cs.ToUserId);
+
+            builder.Entity<Message>()
+               .HasOne(ns => ns.FromUser)
+               .WithMany(i => i.FromMessages)
+               .HasForeignKey(cs => cs.FromUserId);
+
+
+
+            builder.Entity<Message>()
+                .HasOne(ns => ns.ToUser)
+                .WithMany(i => i.ToMessages)
                 .HasForeignKey(cs => cs.ToUserId);
         }
          

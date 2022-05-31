@@ -60,7 +60,7 @@ namespace SocialNetwork.WebUI.Controllers
 
 
 
-            return Ok();
+            return RedirectToAction("Index", "Home");
 
         }
 

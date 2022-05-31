@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SocialNetwork.WebUI.Hubs;
 using SocialNetwork.WebUI.Services.Abstract;
 using SocialNetwork.WebUI.Services.Concrete;
 using SocialProject.WebUI.Entities;
@@ -33,10 +34,11 @@ namespace SocialProject.WebUI
             services.AddScoped<IPostRepository,PostRepository>();
             services.AddScoped<INotficationRepository,NotificationRepository>();
             services.AddScoped<IFriendRepository,FriendRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddDbContext<CustomIdentityDbContext>(
                 options => options
                 .UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SocialMediaDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
-
+            services.AddSignalR();
             services.AddIdentity<CustomIdentityUser, CustomIdentityRole>()
                 .AddEntityFrameworkStores<CustomIdentityDbContext>()
                 .AddDefaultTokenProviders();
@@ -69,6 +71,7 @@ namespace SocialProject.WebUI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("Default", "{controller=Account}/{action=LogIn}/{id?}");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

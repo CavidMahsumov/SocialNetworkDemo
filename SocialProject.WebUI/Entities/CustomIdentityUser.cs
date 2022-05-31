@@ -15,6 +15,8 @@ namespace SocialProject.WebUI.Entities
             Posts = new List<Post>();
             FromNotfications = new List<Notfication>();
             ToNotfications = new List<Notfication>();
+            FromMessages=new List<Message>();
+            ToMessages=new List<Message>();
         }
         public string ImageUrl { get; set; }
 
@@ -47,7 +49,9 @@ namespace SocialProject.WebUI.Entities
         public virtual ICollection<Friend> FriendsUsers { get; set; }
         public  virtual ICollection<Notfication> FromNotfications { get; set; }
         public  virtual ICollection<Notfication> ToNotfications { get; set; }
-        
+        public virtual ICollection<Message> FromMessages { get; set; }
+        public virtual  ICollection<Message> ToMessages { get; set; }
+
 
 
 

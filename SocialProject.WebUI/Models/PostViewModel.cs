@@ -17,6 +17,7 @@ namespace SocialProject.WebUI.Models
         public string VideoLink { get; set; }
         public CustomIdentityUser CurrentUser { get; set; }
         public IFormFile File { get; set; }
+        public int SelectedUserId { get; set; }
 
     }
 }
