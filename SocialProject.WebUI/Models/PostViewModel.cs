@@ -3,7 +3,7 @@ using SocialProject.WebUI.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace SocialProject.WebUI.Models
+namespace SocialNetwork.WebUI.Models
 {
     public class PostViewModel
     {
@@ -17,7 +17,7 @@ namespace SocialProject.WebUI.Models
         public string VideoLink { get; set; }
         public CustomIdentityUser CurrentUser { get; set; }
         public IFormFile File { get; set; }
-        public int SelectedUserId { get; set; }
+        public string SelectedUserId { get; set; }
 
     }
 }

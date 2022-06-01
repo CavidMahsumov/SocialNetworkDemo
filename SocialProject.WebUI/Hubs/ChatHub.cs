@@ -20,14 +20,13 @@ namespace SocialNetwork.WebUI.Hubs
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task SendMessage(string user, Message message)
+        public async Task SendMessage(string message)
         {
             var currentUser = UserHelper.CurUser;
-            var userId = message.ToUserId;
 
             // var receiverUser = userManager.GetUserAsync();
 
-            await Clients.User(userId).SendAsync("ReceiveMessage", UserHelper.CurUser, message);
+            await Clients.Others.SendAsync("Connect",message);
         }
 
 

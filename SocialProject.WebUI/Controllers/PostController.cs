@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.WebUI.Models;
 using SocialProject.WebUI.Entities;
 using SocialProject.WebUI.Helpers;
 using SocialProject.WebUI.Models;

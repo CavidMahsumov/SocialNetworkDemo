@@ -45,12 +45,15 @@ namespace SocialProject.WebUI.Controllers
             var users = _userManager.Users.ToList();
             UserHelper.CurrentUserId = user.Id;
             UserHelper.CurUser = user;
+            UserHelper.Users = users; 
             var model = new PostViewModel
             {
                 Posts = _postRepository.GetAll().ToList(),
                 Users = users,
                 CurrentUser = await GetUser()
             };
+
+
             return View(model);
         }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.WebUI.Entities;
 using SocialNetwork.WebUI.Helpers;
+using SocialNetwork.WebUI.Models;
 using SocialNetwork.WebUI.Services.Abstract;
 using SocialProject.WebUI.Entities;
 using SocialProject.WebUI.Models;
@@ -21,20 +22,16 @@ namespace SocialNetwork.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMessage(PostViewModel model)
         {
-            var message = new Message()
+            var chatmodel = new PostViewModel
             {
-                Date = DateTime.Now
+                CurrentUser = UserHelper.CurUser,
+                SelectedUserId = model.SelectedUserId,
+                Users=UserHelper.Users
+
 
             };
-            message.FromUserId = UserHelper.CurrentUserId;
-            message.FromUser = UserHelper.CurUser;
-            
-            if (message != null)
-            {
-                _messageRepository.Add(message);
-            }
 
-            return RedirectToAction("Chat", "Home");
+            return View("../Home/Chat",model);
         }
     }
 }

@@ -7,11 +7,22 @@ document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
     var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
+    var content =`                                <div class="message-item">
+                                    <div class="message-user">
+                                        <figure class="avatar">
+                                            <img src="~/images/user-9.png" alt="image">
+                                        </figure>
+                                        <div>
+                                            <h5>Byrom Guittet</h5>
+                                            <div class="time">01:35 PM</div>
+                                        </div>
+                                    </div>
+                                    <div class="message-wrap">${message}</div>
+                                </div>`
+    document.getElementById("mid").appendChild(content);
     // We can assign user-supplied strings to an element's textContent because it
     // is not interpreted as markup. If you're assigning in any other way, you 
     // should be aware of possible script injection concerns.
-    li.textContent = `${user} says ${message}`;
 });
 
 connection.on("Connect", function (info) {
@@ -30,10 +41,9 @@ connection.start().then(function () {
     return console.error(err.toString());
 });
 
-document.getElementById("sendButton").addEventListener("click", function (event) {
-    var user = document.getElementById("userInput").value;
-    var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", user, message).catch(function (err) {
+document.getElementById("sendbtn").addEventListener("click", function (event) {
+    var message = document.getElementById("messageinput").value;
+    connection.invoke("SendMessage", message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
