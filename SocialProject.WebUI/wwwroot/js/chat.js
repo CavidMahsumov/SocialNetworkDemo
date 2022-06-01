@@ -47,6 +47,10 @@ connection.start().then(function () {
     return console.error(err.toString());
 });
 
+function myFunction() {
+    console.log("Salam");
+}
+
 document.getElementById("sendbtn").addEventListener("click", function (event) {
     console.log("Salam");
     var user = document.getElementById("userInput").value;
