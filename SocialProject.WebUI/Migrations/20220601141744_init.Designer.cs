@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialProject.WebUI.Entities;
 
-namespace SocialProject.WebUI.Migrations
+namespace SocialNetwork.WebUI.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
-    [Migration("20220525102418_init")]
+    [Migration("20220601141744_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,6 +123,87 @@ namespace SocialProject.WebUI.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("SocialNetwork.WebUI.Entities.Friend", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Friends");
+                });
+
+            modelBuilder.Entity("SocialNetwork.WebUI.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FromUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromUserId");
+
+                    b.HasIndex("ToUserId");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("SocialNetwork.WebUI.Entities.Notfication", b =>
+                {
+                    b.Property<int>("NotficationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FromUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("NotficationId");
+
+                    b.HasIndex("FromUserId");
+
+                    b.HasIndex("ToUserId");
+
+                    b.ToTable("Notfications");
                 });
 
             modelBuilder.Entity("SocialProject.WebUI.Entities.CustomIdentityRole", b =>
@@ -346,6 +427,39 @@ namespace SocialProject.WebUI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SocialNetwork.WebUI.Entities.Friend", b =>
+                {
+                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "ReceiverUser")
+                        .WithMany("FriendsUsers")
+                        .HasForeignKey("ReceiverId");
+
+                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "SenderUser")
+                        .WithMany("SenderUsers")
+                        .HasForeignKey("SenderId");
+                });
+
+            modelBuilder.Entity("SocialNetwork.WebUI.Entities.Message", b =>
+                {
+                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "FromUser")
+                        .WithMany("FromMessages")
+                        .HasForeignKey("FromUserId");
+
+                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "ToUser")
+                        .WithMany("ToMessages")
+                        .HasForeignKey("ToUserId");
+                });
+
+            modelBuilder.Entity("SocialNetwork.WebUI.Entities.Notfication", b =>
+                {
+                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "FromUser")
+                        .WithMany("FromNotfications")
+                        .HasForeignKey("FromUserId");
+
+                    b.HasOne("SocialProject.WebUI.Entities.CustomIdentityUser", "ToUser")
+                        .WithMany("ToNotfications")
+                        .HasForeignKey("ToUserId");
                 });
 
             modelBuilder.Entity("SocialProject.WebUI.Entities.Post", b =>

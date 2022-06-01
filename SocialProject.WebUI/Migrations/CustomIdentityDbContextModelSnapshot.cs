@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialProject.WebUI.Entities;
 
-namespace SocialProject.WebUI.Migrations
+namespace SocialNetwork.WebUI.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
     partial class CustomIdentityDbContextModelSnapshot : ModelSnapshot
