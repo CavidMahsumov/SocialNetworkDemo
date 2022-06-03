@@ -3,6 +3,7 @@ using SocialProject.WebUI.Models;
 using SocialProject.WebUI.Services.Abstract;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SocialProject.WebUI.Services.Concrete
 {
@@ -46,39 +47,33 @@ namespace SocialProject.WebUI.Services.Concrete
             return null;
         }
 
-        public IEnumerable<Post> GetAll()
+        public IEnumerable<Post>GetAll()
         {
-            var downtimeJoinReasons = from d in _context.Users
-                                      join u in _context.Friends on d.Id equals u.SenderId
-                                      select new Post
-                                      {
-                                            UserId=d.Id,
-                                            
-                                      };
-
-            return downtimeJoinReasons.ToList();
+            return _context.Posts;
         }
 
-        public void Update(Post post)
+        public  void Update(Post post)
         {
-            foreach (var item in _context.Posts)
+            var posts =  GetAll();
+            foreach (var item in posts)
             {
                 if (item.PostId == post.PostId)
                 {
+                   item.PostId = post.PostId;
+                    item.VideoLink= post.VideoLink;
+                    item.When = post.When;
                     item.Message = post.Message;
+                    item.UserId = post.UserId;
+                    item.CommentCount = post.CommentCount;
+                    item.CustomIdentityUser = post.CustomIdentityUser;
                     item.ImagePath = post.ImagePath;
                     item.LikeCount = post.LikeCount;
-                    item.CommentCount = post.CommentCount;
-                    item.UserId = post.UserId;
-                    item.VideoLink = post.VideoLink;
-                    item.When = post.When;
-                    item.CustomIdentityUser = post.CustomIdentityUser;
-                }
 
+                }
             }
             _context.SaveChanges();
         }
 
     }
-        
+
 }

@@ -18,6 +18,7 @@ namespace SocialNetwork.WebUI.Models
         public CustomIdentityUser CurrentUser { get; set; }
         public IFormFile File { get; set; }
         public string SelectedUserId { get; set; }
+        public int PostId { get; set; }
 
     }
 }

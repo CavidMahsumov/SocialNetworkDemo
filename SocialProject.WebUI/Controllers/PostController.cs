@@ -19,13 +19,16 @@ namespace SocialNetwork.WebUI.Controllers
         private UserManager<CustomIdentityUser> _userManager;
         private readonly IWebHostEnvironment _webhost;
         private IPostRepository _postRepository;
+        private CustomIdentityDbContext _customIdentityDbContext;
 
-        public PostController(IHttpContextAccessor httpContext, UserManager<CustomIdentityUser> userManager, IWebHostEnvironment webhost, IPostRepository postRepository)
+
+        public PostController(IHttpContextAccessor httpContext, UserManager<CustomIdentityUser> userManager, IWebHostEnvironment webhost, IPostRepository postRepository, CustomIdentityDbContext customIdentityDbContext)
         {
             _httpContext = httpContext;
             _userManager = userManager;
             _webhost = webhost;
             _postRepository = postRepository;
+            _customIdentityDbContext = customIdentityDbContext;
         }
 
         [HttpPost] 
@@ -49,6 +52,27 @@ namespace SocialNetwork.WebUI.Controllers
             _postRepository.Add(post);
 
             return RedirectToAction("Index","Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>AddLike(PostViewModel model)
+        {
+            Post post = new Post();
+            var postid=model.PostId;
+            var posts = _postRepository.GetAll();
+            post.PostId = postid;
+            foreach (var item in posts)
+            {
+                if (item.PostId == postid)
+                {
+                    item.LikeCount++;
+                    _postRepository.Update(item);
+                    
+                    
+                }
+            }
+            return RedirectToAction("Index","Home");
+
         }
     }
 }

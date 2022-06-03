@@ -10,8 +10,8 @@ using SocialProject.WebUI.Entities;
 namespace SocialNetwork.WebUI.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
-    [Migration("20220601141744_init")]
-    partial class init
+    [Migration("20220603111616_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -37,13 +37,24 @@ namespace SocialProject.WebUI
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddDbContext<CustomIdentityDbContext>(
                 options => options
-                .UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SocialMediaDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
-            services.AddSignalR();
+                .UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SocialMediaDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=True;MultipleActiveResultSets=True"));
             services.AddIdentity<CustomIdentityUser, CustomIdentityRole>()
                 .AddEntityFrameworkStores<CustomIdentityDbContext>()
                 .AddDefaultTokenProviders();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy => {
+                    policy.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .SetIsOriginAllowed(orign => true);
+                });
+            });
+            services.AddSignalR();
 
-            
+
+
+
 
         }
 
@@ -67,6 +78,7 @@ namespace SocialProject.WebUI
             app.UseAuthentication();
 
             app.UseAuthorization();
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {

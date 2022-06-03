@@ -5,10 +5,14 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 //Disable the send button until connection is established.
-document.getElementById("sendButton").disabled = true;
 
 
-connection.on("ReceiveMessage", function (user, message) {
+
+
+connection.start();
+
+
+connection.on("ReceiveMessage", function (message) {
     var li = document.createElement("li");
     var content = `                                <div class="message-item">
                                     <div class="message-user">
@@ -28,35 +32,39 @@ connection.on("ReceiveMessage", function (user, message) {
     // should be aware of possible script injection concerns.
 });
 
-
-
-
-connection.on("Connect", function (info) {
-    var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
-    // We can assign user-supplied strings to an element's textContent because it
-    // is not interpreted as markup. If you're assigning in any other way, you 
-    // should be aware of possible script injection concerns.
-    li.innerHTML = `<span style='color:green;'>${info}</span>`;
-});
-
-
-connection.start().then(function () {
-    document.getElementById("sendButton").disabled = false;
-}).catch(function (err) {
-    return console.error(err.toString());
-});
-
-function myFunction() {
-    console.log("Salam");
-}
-
 document.getElementById("sendbtn").addEventListener("click", function (event) {
     console.log("Salam");
-    var user = document.getElementById("userInput").value;
     var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", user, message).catch(function (err) {
-        return console.error(err.toString());
-    });
+    console.log(message);
+    connection.invoke("SendMessage", message);
     event.preventDefault();
-});
+},
+
+
+
+
+
+
+//document.getElementById("sendbtn").addEventListener("click", function (event) {
+//    console.log("Salam");
+//    var user = document.getElementById("userInput").value;
+//    var message = document.getElementById("messageInput").value;
+//    connection.invoke("SendMessage", user, message);
+//    })
+//    event.preventDefault();
+    function loadcauhoi(data) {
+        console.log("Sakam");
+        $.ajax({
+            dataType: "Html",
+            type: "POST",
+            url: '@Url.Action("AddLike","PostController")',
+            data: { model: data },
+            success: function (a) {
+                // Replace the div's content with the page method's return.
+                alert("success");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown)
+            }
+        });
+    }

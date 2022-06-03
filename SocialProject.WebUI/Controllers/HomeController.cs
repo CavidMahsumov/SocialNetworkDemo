@@ -16,7 +16,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace SocialProject.WebUI.Controllers
+namespace SocialNetwork.WebUI.Controllers
 {
     [Authorize]
     public class HomeController : Controller

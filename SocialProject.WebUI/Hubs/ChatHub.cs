@@ -22,11 +22,7 @@ namespace SocialNetwork.WebUI.Hubs
 
         public async Task SendMessage(string message)
         {
-            var currentUser = UserHelper.CurUser;
-
-            // var receiverUser = userManager.GetUserAsync();
-
-            await Clients.Others.SendAsync("Connect",message);
+            await Clients.All.SendAsync("ReceiveMessage", message);
         }
 
 
