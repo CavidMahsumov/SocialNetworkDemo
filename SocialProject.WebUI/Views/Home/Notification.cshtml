@@ -1,4 +1,4 @@
-﻿@model SocialNetwork.WebUI.Models.NotificationViewModel
+﻿@model SocialNetwork.WebUI.Models.PostViewModel
 @using SocialNetwork.WebUI.Helpers
 
 @{
@@ -27,7 +27,7 @@
                         </h2>
 
                         <ul class="notification-box">
-                            @foreach (var item in Model.Notfications)
+                            @foreach (var item in Model.Notifications)
                             {
                                 if (item.ToUserId == @UserHelper.CurrentUserId)
                                 {

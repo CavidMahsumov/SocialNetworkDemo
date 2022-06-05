@@ -54,25 +54,6 @@ namespace SocialNetwork.WebUI.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        [HttpPost]
-        public async Task<IActionResult>AddLike(PostViewModel model)
-        {
-            Post post = new Post();
-            var postid=model.PostId;
-            var posts = _postRepository.GetAll();
-            post.PostId = postid;
-            foreach (var item in posts)
-            {
-                if (item.PostId == postid)
-                {
-                    item.LikeCount++;
-                    _postRepository.Update(item);
-                    
-                    
-                }
-            }
-            return RedirectToAction("Index","Home");
-
-        }
+      
     }
 }

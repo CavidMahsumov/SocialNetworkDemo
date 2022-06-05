@@ -35,7 +35,7 @@ namespace SocialNetwork.WebUI.Controllers
         //private INotficationRepository _notfRepository;
 
         [HttpPost]
-        public async Task<IActionResult> SendNotf(NotificationViewModel model)
+        public async Task<IActionResult> SendNotf(PostViewModel model)
         {
             var userId = _httpContext.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
@@ -65,7 +65,7 @@ namespace SocialNetwork.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFriend(NotificationViewModel model)
+        public async Task<IActionResult> AddFriend(PostViewModel model)
         {
             var sender = await _userManager.FindByIdAsync(model.SenderId);
             var receiver = await _userManager.FindByIdAsync(model.ReceiverId);

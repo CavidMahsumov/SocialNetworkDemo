@@ -18,7 +18,7 @@ namespace SocialProject.WebUI.Entities
 
         public string UserId { get; set; }
 
-        public virtual CustomIdentityUser CustomIdentityUser { get; set; }
+        public  CustomIdentityUser CustomIdentityUser { get; set; }
 
 
 

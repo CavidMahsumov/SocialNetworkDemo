@@ -1,4 +1,5 @@
-﻿using SocialProject.WebUI.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialProject.WebUI.Entities;
 using SocialProject.WebUI.Models;
 using SocialProject.WebUI.Services.Abstract;
 using System.Collections.Generic;
@@ -18,7 +19,10 @@ namespace SocialProject.WebUI.Services.Concrete
 
         public void Add(Post post)
         {
-            _context.Posts.Add(post);
+            foreach (var item in _context.Users)
+            {
+                item.Posts.Add(post);
+            }
             _context.SaveChanges();
         }
 
@@ -47,31 +51,26 @@ namespace SocialProject.WebUI.Services.Concrete
             return null;
         }
 
-        public IEnumerable<Post>GetAll()
+        public IEnumerable<Post> GetAll()
         {
             return _context.Posts;
         }
 
-        public  void Update(Post post)
+        public  void Update(int id)
         {
-            var posts =  GetAll();
-            foreach (var item in posts)
+            foreach (var chunk in _context.Users)
             {
-                if (item.PostId == post.PostId)
+                foreach (var item in chunk.Posts)
                 {
-                   item.PostId = post.PostId;
-                    item.VideoLink= post.VideoLink;
-                    item.When = post.When;
-                    item.Message = post.Message;
-                    item.UserId = post.UserId;
-                    item.CommentCount = post.CommentCount;
-                    item.CustomIdentityUser = post.CustomIdentityUser;
-                    item.ImagePath = post.ImagePath;
-                    item.LikeCount = post.LikeCount;
-
+                    if (item.PostId == id)
+                    {
+                        ++item.LikeCount;
+                        _context.Update(item);
+                    }
                 }
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+
         }
 
     }

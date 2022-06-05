@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.WebUI.Models;
 using SocialProject.WebUI.Entities;
 using SocialProject.WebUI.Models;
 using System;
@@ -107,7 +108,7 @@ namespace SocialProject.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Password(PasswordViewModel model)
+        public async Task<IActionResult> Password(PostViewModel model)
         {
             if (ModelState.IsValid)
             {

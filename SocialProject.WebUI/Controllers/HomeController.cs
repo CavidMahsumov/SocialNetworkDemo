@@ -182,7 +182,7 @@ namespace SocialNetwork.WebUI.Controllers
         {
             var user = await GetUser();
 
-            var model = new AccountInfoViewModel
+            var model = new PostViewModel
             {
                 Firstname = user.Firstname,
                 Lastname = user.Lastname,
@@ -193,7 +193,9 @@ namespace SocialNetwork.WebUI.Controllers
                 Country = user.Country,
                 Phone = user.PhoneNumber,
                 PostCode = user.PostCode,
-                ImagePath = user.ImageUrl
+                ImagePath = user.ImageUrl,
+              
+                
             };
 
             return View(model);
@@ -295,9 +297,9 @@ namespace SocialNetwork.WebUI.Controllers
         public IActionResult Notification()
         {
             var notf = _notfRepository.GetAll();
-            var model = new NotificationViewModel()
+            var model = new PostViewModel()
             {
-                Notfications = notf.ToList(),
+                Notifications = notf.ToList(),
                 Users=_userManager.Users.ToList()
                 
             };
@@ -317,10 +319,10 @@ namespace SocialNetwork.WebUI.Controllers
         {
             var users = _userManager.Users.ToList();
             var curruser=await GetUser();
-            var model = new NotificationViewModel()
+            var model = new PostViewModel()
             {
                 Users = users,
-                 CurUser = curruser
+                 CurrentUser = curruser
             };
             return View(model);
         }
